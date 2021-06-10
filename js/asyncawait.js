@@ -19,21 +19,19 @@ function showMessage(name) {
     })
 }
 
-getUser('pepe', 2000)
-    .then(data => {
+const getData = async () => {
+    try {
+        let data = await getUser('pepe', 3000);
         console.log(data);
-        return getUser(3, 1000);
-    })
-    .then(data => {
-        console.log(data);
-        return showMessage(data.user)
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(err => console.error(err));
+        let message = await showMessage(data.user);
+        console.log(message);
+    } catch(err) {
+        console.error(err);
+    } finally {
+        console.log('Me ejecuto haya error o no')
+    }
+}
 
-    
-getUser(0, 1000)
-    .then(data => console.log(data))
-    .catch(err => console.error(err));
+getData();
+
+// const data2 = await getUser(0, 1000); Error await debe estar siempre en el contexto de una función async
