@@ -21,7 +21,7 @@ function showMessage(name) {
 
 const getData = async () => {
     try {
-        let data = await getUser('pepe', 3000);
+        let data = await getUser(2, 3000);
         console.log(data);
         let message = await showMessage(data.user);
         console.log(message);
