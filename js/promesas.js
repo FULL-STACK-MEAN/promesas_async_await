@@ -1,10 +1,13 @@
 const users = ['Juan Pérez','Lucía Gómez','Carlos López','Sara García'];
 
-function getUser(position) {
+function getUser(position, timeout) {
     return new Promise((resolve, reject) => {
+        if(typeof position !== 'number' || position >= users.length) {
+            return reject('Posición no válida');
+        }
         setTimeout(() => {
             resolve({user: users[position]})
-        }, 2000)
+        }, timeout)
     })
 }
 
@@ -16,7 +19,11 @@ function showMessage(name) {
     })
 }
 
-getUser(1)
+getUser(1, 2000)
+    .then(data => {
+        console.log(data);
+        return getUser(3, 1000);
+    })
     .then(data => {
         console.log(data);
         return showMessage(data.user)
@@ -24,6 +31,8 @@ getUser(1)
     .then(data => {
         console.log(data);
     })
-    .catch(err => console.log(err));
-
-console.log('Continua el hilo de ejecución...');
+    .catch(err => console.error(err));
+    
+getUser(0, 1000)
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
